@@ -1,0 +1,22 @@
+[Unit]
+Description=Agentic RAG Telegram Bot
+After=network.target mongodb.service
+
+[Service]
+# Replace 'root' with your actual linux username if you aren't using root
+User=root
+
+# Change this to the actual path where you cloned the bot on your VPS
+WorkingDirectory=/root/telegram-bot-agentic-rag
+
+# Change this to the path of your virtual environment python
+ExecStart=/root/telegram-bot-agentic-rag/.venv/bin/python bot.py
+
+Restart=always
+RestartSec=5
+
+# To ensure the python output is logged correctly
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
