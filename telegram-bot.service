@@ -7,10 +7,10 @@ After=network.target mongodb.service
 User=root
 
 # Change this to the actual path where you cloned the bot on your VPS
-WorkingDirectory=/root/telegram-bot-agentic-rag
+WorkingDirectory=/root/projects/telegram-bot-agentic-rag
 
 # Change this to the path of your virtual environment python
-ExecStart=/root/telegram-bot-agentic-rag/.venv/bin/python bot.py
+ExecStart=/root/projects/telegram-bot-agentic-rag/.venv/bin/python bot.py
 
 Restart=always
 RestartSec=5
