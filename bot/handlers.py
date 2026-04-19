@@ -101,7 +101,14 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handles the /start command."""
     welcome_text = (
-        "Assalomu alaykum! Men Keeping platformasinig yordamchi botiman. Men Keeping platformasidagi barcha hujjatlar va videolardan olingan bilim bazamizga asoslanib sizning savollargizga javob berishda yordam bera olaman. "
-        "Meni shu chatdan turib savol berishgiz yoki istalgan gruppaga admin sifatida qo'shib qo'yishingiz mumkin."
+        "👋 *Assalomu alaykum!*\n\n"
+        "Men — *Keeping platformasi* rasmiy yordamchi botiman 🤖\n\n"
+        "📚 *Nima qila olaman?*\n"
+        "Keeping platformasidagi barcha hujjatlar va videolar asosida tayyorlangan bilim bazasidan foydalanib, "
+        "sizning savollaringizga aniq va tezkor javob beraman.\n\n"
+        "💬 *Qanday foydalanish mumkin?*\n"
+        "• Shu chatda bevosita savol bering\n"
+        "• Yoki meni istalgan guruhga *admin* sifatida qo'shing\n\n"
+        "❓ Savolingiz bormi? Bemalol yozing — men shu yerdaman!"
     )
     await update.message.reply_text(welcome_text)
