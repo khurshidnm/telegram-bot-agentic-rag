@@ -1,6 +1,6 @@
 # Agentic RAG Telegram Bot
 
-A highly intelligent, context-aware Telegram Assistant built by **Khurshid Normurodov**. 
+A highly intelligent, context-aware Telegram Assistant. 
 
 This bot is designed to serve as a hyper-confident, autonomous agent for Telegram groups and private chats. It utilizes Retrieval-Augmented Generation (RAG) to answer questions based on a localized knowledge base, and features a unique **Continuous Human Learning** mechanism.
 
