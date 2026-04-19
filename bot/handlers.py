@@ -102,6 +102,6 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handles the /start command."""
     welcome_text = (
         "Assalomu alaykum! Men Keeping platformasinig yordamchi botiman. Men Keeping platformasidagi barcha hujjatlar va videolardan olingan bilim bazamizga asoslanib sizning savollargizga javob berishda yordam bera olaman. "
-        "Meni shu chatdan turib savol berishgiz yoki istalgan gruppaga admin sifatida qo'shib qo'yishingiz mumkin. Men sizga qo'limdan kelganicha yordam beraman."
+        "Meni shu chatdan turib savol berishgiz yoki istalgan gruppaga admin sifatida qo'shib qo'yishingiz mumkin."
     )
     await update.message.reply_text(welcome_text)
