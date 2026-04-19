@@ -1,4 +1,5 @@
 import os
+import shutil
 import logging
 from dotenv import load_dotenv
 from langchain_community.document_loaders import DirectoryLoader, TextLoader, PyPDFLoader, Docx2txtLoader, UnstructuredExcelLoader
@@ -54,6 +55,11 @@ def ingest_documents():
     )
     splits = text_splitter.split_documents(docs)
     logger.info(f"Created {len(splits)} chunks.")
+
+    # Clear old database to prevent duplicate entries
+    if os.path.exists(PERSIST_DIR):
+        logger.info("Clearing old vector store to prevent duplicates...")
+        shutil.rmtree(PERSIST_DIR)
 
     logger.info("Initializing embeddings and ChromaDB...")
     embeddings = OpenAIEmbeddings()

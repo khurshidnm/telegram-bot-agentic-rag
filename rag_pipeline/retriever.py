@@ -4,7 +4,7 @@ from langchain_chroma import Chroma
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-from config.prompts import SYSTEM_PROMPT
+from config.prompts import get_system_prompt
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +27,6 @@ class RAGPipeline:
 
         # You can switch to gpt-4 or any other model as needed.
         self.llm = ChatOpenAI(model="gpt-4o", temperature=0.3)
-        self.prompt = PromptTemplate.from_template(SYSTEM_PROMPT)
 
     def format_docs(self, docs):
         return "\n\n".join(doc.page_content for doc in docs)
@@ -41,7 +40,9 @@ class RAGPipeline:
             docs = self.retriever.invoke(question)
             context = self.format_docs(docs)
             
-            chain = self.prompt | self.llm | StrOutputParser()
+            # Build prompt fresh each time so STRICTNESS_LEVEL changes take effect
+            prompt = PromptTemplate.from_template(get_system_prompt())
+            chain = prompt | self.llm | StrOutputParser()
             
             response = chain.invoke({
                 "context": context,
