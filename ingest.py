@@ -81,10 +81,14 @@ def split_markdown_documents(docs):
 
 
 def split_generic_documents(docs):
-    """Standard splitting for non-Markdown documents (PDF, DOCX, etc.)."""
+    """Standard splitting for non-Markdown documents (PDF, DOCX, etc.).
+    Uses larger chunks to avoid cutting Q&A pairs in half.
+    Prioritizes splitting on double-newlines (paragraph boundaries).
+    """
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=800,
-        chunk_overlap=200,
+        chunk_size=1500,
+        chunk_overlap=400,
+        separators=["\n\n\n", "\n\n", "\n", ". ", " ", ""],
         add_start_index=True,
     )
     return text_splitter.split_documents(docs)
