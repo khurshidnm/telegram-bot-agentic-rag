@@ -18,7 +18,7 @@ class RAGPipeline:
                 persist_directory=self.persist_directory,
                 embedding_function=self.embeddings
             )
-            self.retriever = self.vector_store.as_retriever(search_kwargs={"k": 4})
+            self.retriever = self.vector_store.as_retriever(search_kwargs={"k": 10})
             logger.info("ChromaDB vector store loaded successfully.")
         except Exception as e:
             logger.error(f"Failed to load ChromaDB: {e}")
