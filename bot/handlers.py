@@ -5,12 +5,9 @@ from telegram.ext import ContextTypes
 from telegram.constants import ChatAction
 from database.memory import MongoMemory
 from rag_pipeline.retriever import RAGPipeline
+from config.admins import admin_manager
 
 logger = logging.getLogger(__name__)
-
-# Load config
-assistant_ids_str = os.getenv("ASSISTANT_USER_IDS", "")
-ASSISTANT_USER_IDS = [int(id.strip()) for id in assistant_ids_str.split(",") if id.strip().isdigit()]
 
 # Initialize singletons
 memory = MongoMemory()
@@ -25,8 +22,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.from_user.id
     username = update.message.from_user.username or update.message.from_user.first_name
     text = update.message.text
+    is_admin = admin_manager.is_admin(user_id)
 
-    # 1. Log the incoming message to MongoDB
+    # 1. Log the incoming message to MongoDB (admins included)
     memory.add_message(
         chat_id=chat_id,
         user_id=user_id,
@@ -35,23 +33,39 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         is_bot=False
     )
 
-    # 2. Check if this is a reply from an Assistant
-    if user_id in ASSISTANT_USER_IDS and update.message.reply_to_message:
+    # 2. Handle admin messages: learn from their interactions but don't reply
+    if is_admin:
+        # If an admin is replying to a client's message, learn from it
+        if update.message.reply_to_message:
+            replied_msg = update.message.reply_to_message
+            replied_user_id = replied_msg.from_user.id
+            
+            # Learn from admin's reply to client questions
+            if not admin_manager.is_admin(replied_user_id) and replied_user_id != context.bot.id:
+                question = replied_msg.text
+                answer = text
+                if question and answer:
+                    logger.info(f"Admin {username} replied to client. Learning Q&A pair...")
+                    rag.learn_qa_pair(question, answer)
+        
+        # Don't respond to admin messages - admins are support staff, not clients
+        logger.info(f"Admin {username} sent message, skipping bot response")
+        return
+
+    # 3. Check if this is a reply from another bot/assistant (non-admin)
+    if update.message.reply_to_message:
         replied_msg = update.message.reply_to_message
         replied_user_id = replied_msg.from_user.id
         
-        # We only learn if they are replying to a client's message
-        if replied_user_id not in ASSISTANT_USER_IDS and replied_user_id != context.bot.id:
+        # Learn if they are replying to a client's message (and not from bot itself)
+        if not admin_manager.is_admin(replied_user_id) and replied_user_id != context.bot.id:
             question = replied_msg.text
             answer = text
             if question and answer:
-                logger.info("Assistant replied to client. Learning Q&A pair...")
+                logger.info("User replied to question. Learning Q&A pair...")
                 rag.learn_qa_pair(question, answer)
-        
-        # Don't try to bot-respond to assistant messages
-        return
 
-    # 3. Determine if the bot should process this message.
+    # 4. Determine if the bot should process this message.
     bot_username = context.bot.username
     is_group = update.message.chat.type in ['group', 'supergroup']
     

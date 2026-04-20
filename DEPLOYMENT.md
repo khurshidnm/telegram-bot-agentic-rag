@@ -55,8 +55,12 @@ OPENAI_API_KEY=your_openai_api_key
 MONGO_URI=mongodb://localhost:27017/
 DB_NAME=telegram_bot
 COLLECTION_NAME=chat_history
-ASSISTANT_USER_IDS=419223475
+STRICTNESS_LEVEL=BALANCED
+ADMIN_USER_IDS=admin1_id,admin2_id,admin3_id
 ```
+
+**Admin User IDs:** Add your support staff's Telegram User IDs (comma-separated) so the bot won't reply to them directly, but will still learn from their interactions with clients. See [ADMIN_MANAGEMENT.md](ADMIN_MANAGEMENT.md) for details.
+
 Press `CTRL + O`, `Enter` to save, and `CTRL + X` to exit.
 
 ## Step 6: Transfer and Ingest Your Document
