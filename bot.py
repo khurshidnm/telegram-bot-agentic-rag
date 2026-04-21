@@ -6,7 +6,18 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters
-from bot.handlers import handle_message, start_command
+from bot.handlers import (
+    handle_message,
+    start_command,
+    admin_help_command,
+    kb_count_command,
+    kb_list_command,
+    kb_get_command,
+    kb_add_command,
+    kb_edit_command,
+    kb_delete_command,
+    kb_export_command,
+)
 
 # Setup logging
 logging.basicConfig(
@@ -31,6 +42,14 @@ def main():
 
     # Add handlers
     application.add_handler(CommandHandler("start", start_command))
+    application.add_handler(CommandHandler("admin_help", admin_help_command))
+    application.add_handler(CommandHandler("kb_count", kb_count_command))
+    application.add_handler(CommandHandler("kb_list", kb_list_command))
+    application.add_handler(CommandHandler("kb_get", kb_get_command))
+    application.add_handler(CommandHandler("kb_add", kb_add_command))
+    application.add_handler(CommandHandler("kb_edit", kb_edit_command))
+    application.add_handler(CommandHandler("kb_delete", kb_delete_command))
+    application.add_handler(CommandHandler("kb_export", kb_export_command))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
     # Start the Bot

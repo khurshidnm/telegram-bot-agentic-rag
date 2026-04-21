@@ -1,5 +1,6 @@
 import os
 import logging
+import uuid
 from langchain_chroma import Chroma
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_core.prompts import PromptTemplate
@@ -105,3 +106,124 @@ class RAGPipeline:
             logger.info("Successfully learned new Q&A pair from human assistant.")
         except Exception as e:
             logger.error(f"Failed to learn Q&A pair: {e}")
+
+    @staticmethod
+    def _format_qa_text(question: str, answer: str) -> str:
+        return f"[Topic: Learned from Admin]\n\nQuestion: {question}\nAnswer: {answer}"
+
+    def add_admin_qa_pair(self, question: str, answer: str, admin_id: int) -> str | None:
+        """Adds an admin-provided Q&A pair and returns the stored document ID."""
+        if not self.vector_store:
+            logger.error("Cannot add admin Q&A: Vector store is not initialized.")
+            return None
+
+        doc_id = str(uuid.uuid4())
+        metadata = {
+            "source": "admin_manual",
+            "admin_id": int(admin_id),
+            "record_type": "qa_pair",
+        }
+        text = self._format_qa_text(question=question, answer=answer)
+
+        try:
+            self.vector_store.add_texts(texts=[text], metadatas=[metadata], ids=[doc_id])
+            return doc_id
+        except Exception as e:
+            logger.error(f"Failed to add admin Q&A pair: {e}")
+            return None
+
+    def list_knowledge_entries(self, limit: int = 20, offset: int = 0) -> list[dict]:
+        """Returns a paginated list of stored knowledge entries."""
+        if not self.vector_store:
+            return []
+
+        try:
+            data = self.vector_store.get(
+                include=["documents", "metadatas"],
+                limit=limit,
+                offset=offset,
+            )
+            ids = data.get("ids", []) or []
+            documents = data.get("documents", []) or []
+            metadatas = data.get("metadatas", []) or []
+
+            entries: list[dict] = []
+            for idx, doc_id in enumerate(ids):
+                entries.append(
+                    {
+                        "id": doc_id,
+                        "document": documents[idx] if idx < len(documents) else "",
+                        "metadata": metadatas[idx] if idx < len(metadatas) else {},
+                    }
+                )
+            return entries
+        except Exception as e:
+            logger.error(f"Failed to list knowledge entries: {e}")
+            return []
+
+    def get_knowledge_entry(self, doc_id: str) -> dict | None:
+        """Returns one knowledge entry by ID."""
+        if not self.vector_store:
+            return None
+
+        try:
+            data = self.vector_store.get(ids=[doc_id], include=["documents", "metadatas"])
+            ids = data.get("ids", []) or []
+            if not ids:
+                return None
+
+            documents = data.get("documents", []) or []
+            metadatas = data.get("metadatas", []) or []
+            return {
+                "id": ids[0],
+                "document": documents[0] if documents else "",
+                "metadata": metadatas[0] if metadatas else {},
+            }
+        except Exception as e:
+            logger.error(f"Failed to get knowledge entry {doc_id}: {e}")
+            return None
+
+    def upsert_knowledge_entry(self, doc_id: str, question: str, answer: str, admin_id: int) -> bool:
+        """Updates or inserts a knowledge entry by ID."""
+        if not self.vector_store:
+            logger.error("Cannot update knowledge entry: Vector store is not initialized.")
+            return False
+
+        metadata = {
+            "source": "admin_manual",
+            "admin_id": int(admin_id),
+            "record_type": "qa_pair",
+            "updated_by_admin": int(admin_id),
+        }
+        text = self._format_qa_text(question=question, answer=answer)
+
+        try:
+            self.vector_store.add_texts(texts=[text], metadatas=[metadata], ids=[doc_id])
+            return True
+        except Exception as e:
+            logger.error(f"Failed to upsert knowledge entry {doc_id}: {e}")
+            return False
+
+    def delete_knowledge_entry(self, doc_id: str) -> bool:
+        """Deletes one knowledge entry by ID."""
+        if not self.vector_store:
+            logger.error("Cannot delete knowledge entry: Vector store is not initialized.")
+            return False
+
+        try:
+            self.vector_store.delete(ids=[doc_id])
+            return True
+        except Exception as e:
+            logger.error(f"Failed to delete knowledge entry {doc_id}: {e}")
+            return False
+
+    def count_knowledge_entries(self) -> int:
+        """Returns total number of entries in the vector store."""
+        if not self.vector_store:
+            return 0
+
+        try:
+            return self.vector_store._collection.count()
+        except Exception as e:
+            logger.error(f"Failed to count knowledge entries: {e}")
+            return 0

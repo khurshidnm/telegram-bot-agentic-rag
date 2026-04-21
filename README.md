@@ -49,7 +49,7 @@ DB_NAME=telegram_bot
 COLLECTION_NAME=chat_history
 
 # Comma-separated list of Telegram User IDs for Human Assistants
-ASSISTANT_USER_IDS=123456789,987654321
+ADMIN_USER_IDS=123456789
 ```
 
 ### 5. Start MongoDB
@@ -75,6 +75,23 @@ python3 bot.py
 3. An admin (whose Telegram ID is in `ASSISTANT_USER_IDS`) replies to the user: *"The price is $100."*
 4. The bot automatically learns this pair and saves it to its Vector DB.
 5. A new user asks: *"How much does it cost?"* -> The bot answers immediately!
+
+## 🔐 Admin Knowledge Management
+
+The bot supports secure, admin-only knowledge operations in private chat.
+
+- `/admin_help` - Shows admin command help
+- `/kb_count` - Shows total entries in vector knowledge
+- `/kb_list [page_size] [offset]` - Lists entries with IDs and previews
+- `/kb_get <id>` - Displays full entry by ID
+- `/kb_add <question> | <answer>` - Adds a new Q&A entry
+- `/kb_edit <id> | <question> | <answer>` - Updates an existing entry
+- `/kb_delete <id>` - Deletes an entry by ID
+- `/kb_export` - Exports all knowledge entries as a text file
+
+Security behavior:
+- Only Telegram users listed in `ADMIN_USER_IDS` can run these commands.
+- Admin commands are accepted only in private chat with the bot.
 
 ## 👨‍💻 Author
 **Khurshid Normurodov**
