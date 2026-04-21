@@ -21,7 +21,7 @@ PAYMENT_ESCALATION_REPLY = (
 )
 
 GROUP_SUPPORT_ESCALATION = (
-    "Илтимос, @keepingmanager Telegram манзилига юборинг ёки бизни қўнғироқ қилинг."
+    "Илтимос, @keepingmanager Telegram манзилига юборинг."
 )
 
 
