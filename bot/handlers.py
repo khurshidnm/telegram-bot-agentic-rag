@@ -1,5 +1,6 @@
 import os
 import logging
+import re
 from telegram import Update
 from telegram.ext import ContextTypes
 from telegram.constants import ChatAction
@@ -12,6 +13,62 @@ logger = logging.getLogger(__name__)
 # Initialize singletons
 memory = MongoMemory()
 rag = RAGPipeline()
+
+PAYMENT_ESCALATION_REPLY = (
+    "Ассалому алайкум! Тўловингиз одатда бир неча дақиқа ичида кўринади. "
+    "Агар бирон-бир муаммо юзага келса ёки тўлов кўринмаса, илтимос, "
+    "@keepingmanager Telegram манзилига тўлов чекини юборишинг, текшириб берамиз."
+)
+
+GROUP_SUPPORT_ESCALATION = (
+    "Илтимос, @keepingmanager Telegram манзилига юборинг ёки бизни қўнғироқ қилинг."
+)
+
+
+def get_payment_escalation_reply(text: str) -> str | None:
+    """Returns a fixed support reply for payment visibility questions."""
+    lowered = text.lower()
+
+    # Match Uzbek Latin/Cyrillic variants for payment + timing/visibility concerns.
+    has_payment = bool(re.search(r"(тулов|тўлов|to'?lov|tolov)", lowered))
+    has_time_or_visibility = bool(
+        re.search(
+            r"(qancha\s*vaqt|канча\s*вакт|қанча\s*вақт|к\S*рина|ko'?rin|көрин)",
+            lowered,
+        )
+    )
+
+    if has_payment and has_time_or_visibility:
+        return PAYMENT_ESCALATION_REPLY
+
+    return None
+
+
+def sanitize_group_answer(answer: str, is_group: bool) -> str:
+    """Rewrites DM/private-message instructions in group replies to official escalation wording."""
+    if not is_group:
+        return answer
+
+    dm_patterns = [
+        r"шахсий\s*хабар",
+        r"личн(ые|ый)?\s*сообщени(я|е)",
+        r"в\s*лс",
+        r"dm",
+        r"direct\s*message",
+        r"private\s*message",
+        r"private\s*chat",
+        r"personal\s*message",
+    ]
+
+    if any(re.search(pattern, answer, flags=re.IGNORECASE) for pattern in dm_patterns):
+        return re.sub(
+            r"(?i)([\.!?])?\s*$",
+            f" {GROUP_SUPPORT_ESCALATION}",
+            answer,
+            count=1,
+        )
+
+    return answer
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handles incoming text messages."""
@@ -92,8 +149,14 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         await context.bot.send_chat_action(chat_id=chat_id, action=ChatAction.TYPING)
         recent_history = memory.get_recent_history(chat_id=chat_id, minutes=5)
-        
-        answer = rag.answer_question(question=query, history=recent_history)
+
+        # Deterministic safeguard for payment delay/escalation wording.
+        answer = get_payment_escalation_reply(query)
+        if answer is None:
+            answer = rag.answer_question(question=query, history=recent_history)
+
+        if answer:
+            answer = sanitize_group_answer(answer=answer, is_group=is_group)
         
         # Silent Fallback: if answer is None, the bot doesn't know and should stay silent.
         if answer is None:
