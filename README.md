@@ -49,7 +49,11 @@ DB_NAME=telegram_bot
 COLLECTION_NAME=chat_history
 
 # Comma-separated list of Telegram User IDs for Human Assistants
-ADMIN_USER_IDS=123456789
+# Super admin can manage KB content via bot commands
+SUPER_ADMIN_USER_IDS=123456789
+
+# Trainer admins teach bot from group reply interactions
+TRAINER_ADMIN_USER_IDS=987654321,112233445
 ```
 
 ### 5. Start MongoDB
@@ -72,7 +76,7 @@ python3 bot.py
 ## 🧠 How the Learning Works
 1. A user asks: *"What is the annual price?"*
 2. The bot checks its database. If it doesn't know, it stays silent.
-3. An admin (whose Telegram ID is in `ASSISTANT_USER_IDS`) replies to the user: *"The price is $100."*
+3. A trainer admin (whose Telegram ID is in `TRAINER_ADMIN_USER_IDS`) replies to the user in a group: *"The price is $100."*
 4. The bot automatically learns this pair and saves it to its Vector DB.
 5. A new user asks: *"How much does it cost?"* -> The bot answers immediately!
 
@@ -80,6 +84,7 @@ python3 bot.py
 
 The bot supports secure, admin-only knowledge operations in private chat.
 
+- `/my_role` - Shows your Telegram user ID and effective bot role
 - `/admin_help` - Shows admin command help
 - `/kb_count` - Shows total entries in vector knowledge
 - `/kb_list [page_size] [offset]` - Lists entries with IDs and previews
@@ -90,8 +95,18 @@ The bot supports secure, admin-only knowledge operations in private chat.
 - `/kb_export` - Exports all knowledge entries as a text file
 
 Security behavior:
-- Only Telegram users listed in `ADMIN_USER_IDS` can run these commands.
+- Only Telegram users listed in `SUPER_ADMIN_USER_IDS` can run these commands.
 - Admin commands are accepted only in private chat with the bot.
+
+## 👥 Role Model
+
+- Super Admin:
+	- Can run `/kb_*` and `/admin_help` commands in private chat.
+	- Intended for secure content governance.
+- Trainer Admin:
+	- Used for group operations.
+	- Bot learns from trainer admin replies to user questions in groups.
+	- Does not get bot replies in groups (support workflow).
 
 ## 👨‍💻 Author
 **Khurshid Normurodov**

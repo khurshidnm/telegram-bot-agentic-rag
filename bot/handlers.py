@@ -26,7 +26,7 @@ GROUP_SUPPORT_ESCALATION = (
 )
 
 ADMIN_HELP_TEXT = (
-    "Admin Knowledge Commands:\n"
+    "Super Admin Knowledge Commands:\n"
     "/kb_count - Show total knowledge entries\n"
     "/kb_list [page_size] [offset] - List entries with IDs\n"
     "/kb_get <id> - Show one entry\n"
@@ -43,13 +43,13 @@ def _is_private_chat(update: Update) -> bool:
 
 
 async def _ensure_admin_private(update: Update) -> bool:
-    """Ensures only admins in private chat can execute sensitive commands."""
+    """Ensures only super admins in private chat can execute sensitive commands."""
     if not update.message or not update.message.from_user:
         return False
 
     user_id = update.message.from_user.id
-    if not admin_manager.is_admin(user_id):
-        await update.message.reply_text("Access denied. Admin only.")
+    if not admin_manager.is_super_admin(user_id):
+        await update.message.reply_text("Access denied. Super admin only.")
         return False
 
     if not _is_private_chat(update):
@@ -78,6 +78,27 @@ async def admin_help_command(update: Update, context: ContextTypes.DEFAULT_TYPE)
     if not await _ensure_admin_private(update):
         return
     await update.message.reply_text(ADMIN_HELP_TEXT)
+
+
+async def my_role_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Returns current caller role and user ID for quick diagnostics."""
+    if not update.message or not update.message.from_user:
+        return
+
+    user_id = update.message.from_user.id
+    roles: list[str] = []
+
+    if admin_manager.is_super_admin(user_id):
+        roles.append("Super Admin")
+    if admin_manager.is_trainer_admin(user_id):
+        roles.append("Trainer Admin")
+    if not roles:
+        roles.append("Regular User")
+
+    await update.message.reply_text(
+        f"Your user ID: {user_id}\n"
+        f"Your role: {', '.join(roles)}"
+    )
 
 
 async def kb_count_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -298,7 +319,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.from_user.id
     username = update.message.from_user.username or update.message.from_user.first_name
     text = update.message.text
-    is_admin = admin_manager.is_admin(user_id)
+    is_group = update.message.chat.type in ['group', 'supergroup']
+    is_trainer_admin = admin_manager.is_trainer_admin(user_id)
 
     # 1. Log the incoming message to MongoDB (admins included)
     memory.add_message(
@@ -309,41 +331,26 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         is_bot=False
     )
 
-    # 2. Handle admin messages: learn from their interactions but don't reply
-    if is_admin:
-        # If an admin is replying to a client's message, learn from it
+    # 2. Handle trainer admin messages in groups: learn from interactions but don't reply.
+    if is_trainer_admin and is_group:
         if update.message.reply_to_message:
             replied_msg = update.message.reply_to_message
             replied_user_id = replied_msg.from_user.id
             
-            # Learn from admin's reply to client questions
+            # Learn only from trainer admin replies to non-admin, non-bot users.
             if not admin_manager.is_admin(replied_user_id) and replied_user_id != context.bot.id:
                 question = replied_msg.text
                 answer = text
                 if question and answer:
-                    logger.info(f"Admin {username} replied to client. Learning Q&A pair...")
+                    logger.info(f"Trainer admin {username} replied to client. Learning Q&A pair...")
                     rag.learn_qa_pair(question, answer)
         
-        # Don't respond to admin messages - admins are support staff, not clients
-        logger.info(f"Admin {username} sent message, skipping bot response")
+        # Don't respond to trainer admins in groups; they are support staff.
+        logger.info(f"Trainer admin {username} sent group message, skipping bot response")
         return
-
-    # 3. Check if this is a reply from another bot/assistant (non-admin)
-    if update.message.reply_to_message:
-        replied_msg = update.message.reply_to_message
-        replied_user_id = replied_msg.from_user.id
-        
-        # Learn if they are replying to a client's message (and not from bot itself)
-        if not admin_manager.is_admin(replied_user_id) and replied_user_id != context.bot.id:
-            question = replied_msg.text
-            answer = text
-            if question and answer:
-                logger.info("User replied to question. Learning Q&A pair...")
-                rag.learn_qa_pair(question, answer)
 
     # 4. Determine if the bot should process this message.
     bot_username = context.bot.username
-    is_group = update.message.chat.type in ['group', 'supergroup']
     
     should_respond = False
     

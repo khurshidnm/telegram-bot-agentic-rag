@@ -9,6 +9,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, fil
 from bot.handlers import (
     handle_message,
     start_command,
+    my_role_command,
     admin_help_command,
     kb_count_command,
     kb_list_command,
@@ -42,6 +43,7 @@ def main():
 
     # Add handlers
     application.add_handler(CommandHandler("start", start_command))
+    application.add_handler(CommandHandler("my_role", my_role_command))
     application.add_handler(CommandHandler("admin_help", admin_help_command))
     application.add_handler(CommandHandler("kb_count", kb_count_command))
     application.add_handler(CommandHandler("kb_list", kb_list_command))
