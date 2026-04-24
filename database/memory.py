@@ -18,9 +18,13 @@ class MongoMemory:
             self.db = self.client[db_name]
             self.collection = self.db[collection_name]
             self.image_draft_collection = self.db[image_draft_collection_name]
+            self.bot_config_collection = self.db["bot_config"]
             # Create an index on chat_id and timestamp for faster queries
             self.collection.create_index([("chat_id", 1), ("timestamp", -1)])
             self.image_draft_collection.create_index([("status", 1), ("created_at", -1)])
+            # Initialize bot_enabled state if it doesn't exist
+            if not self.bot_config_collection.find_one({"_id": "bot_enabled"}):
+                self.bot_config_collection.insert_one({"_id": "bot_enabled", "enabled": True, "updated_at": datetime.utcnow()})
             logger.info("Connected to MongoDB successfully.")
         except Exception as e:
             logger.error(f"Failed to connect to MongoDB: {e}")
@@ -151,3 +155,33 @@ class MongoMemory:
         except Exception as e:
             logger.error(f"Failed to update image learning draft {draft_id}: {e}")
             return False
+
+    def set_bot_enabled(self, enabled: bool) -> bool:
+        """Sets the bot's enabled/disabled state."""
+        try:
+            result = self.bot_config_collection.update_one(
+                {"_id": "bot_enabled"},
+                {
+                    "$set": {
+                        "enabled": enabled,
+                        "updated_at": datetime.utcnow(),
+                    }
+                },
+            )
+            return result.modified_count > 0
+        except Exception as e:
+            logger.error(f"Failed to set bot enabled state: {e}")
+            return False
+
+    def is_bot_enabled(self) -> bool:
+        """Checks if the bot is enabled."""
+        try:
+            doc = self.bot_config_collection.find_one({"_id": "bot_enabled"})
+            if not doc:
+                # Default to enabled if not found
+                return True
+            return doc.get("enabled", True)
+        except Exception as e:
+            logger.error(f"Failed to check bot enabled state: {e}")
+            return True
+

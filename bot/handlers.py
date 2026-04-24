@@ -55,6 +55,12 @@ ADMIN_HELP_TEXT = (
     "/learning_approve <draft_id> - Approve draft and add to KB\n"
     "/learning_reject <draft_id> - Reject draft\n"
     "(Legacy aliases: /image_drafts, /image_approve, /image_reject)\n"
+    "\n"
+    "Bot Control Commands:\n"
+    "/bot_on - Enable bot answers (keep learning active)\n"
+    "/bot_off - Disable bot answers (keep learning active)\n"
+    "/bot_status - Show current bot status\n"
+    "\n"
     "/admin_help - Show this help"
 )
 
@@ -99,6 +105,60 @@ async def admin_help_command(update: Update, context: ContextTypes.DEFAULT_TYPE)
     if not await _ensure_admin_private(update):
         return
     await update.message.reply_text(ADMIN_HELP_TEXT)
+
+
+async def bot_on_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Enables the bot to answer questions (super-admin only)."""
+    if not await _ensure_admin_private(update):
+        return
+    
+    try:
+        memory.set_bot_enabled(True)
+        logger.info("Bot enabled by super-admin %s", update.message.from_user.username)
+        await update.message.reply_text(
+            "✅ Bot is now **ENABLED**\n\n"
+            "The bot will answer questions in the group.\n"
+            "Learning remains active regardless of this setting."
+        )
+    except Exception as e:
+        logger.error(f"Failed to enable bot: {e}")
+        await update.message.reply_text("❌ Failed to enable bot. Check logs.")
+
+
+async def bot_off_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Disables the bot from answering (but keeps learning active)."""
+    if not await _ensure_admin_private(update):
+        return
+    
+    try:
+        memory.set_bot_enabled(False)
+        logger.info("Bot disabled by super-admin %s", update.message.from_user.username)
+        await update.message.reply_text(
+            "⛔ Bot is now **DISABLED**\n\n"
+            "The bot will NOT answer questions in the group.\n"
+            "However, learning from trainer responses will continue."
+        )
+    except Exception as e:
+        logger.error(f"Failed to disable bot: {e}")
+        await update.message.reply_text("❌ Failed to disable bot. Check logs.")
+
+
+async def bot_status_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Shows the current bot status (super-admin only)."""
+    if not await _ensure_admin_private(update):
+        return
+    
+    try:
+        is_enabled = memory.is_bot_enabled()
+        status = "✅ ENABLED" if is_enabled else "⛔ DISABLED"
+        await update.message.reply_text(
+            f"**Bot Status**: {status}\n\n"
+            f"• Answering questions: {'Yes' if is_enabled else 'No'}\n"
+            f"• Learning from trainers: Always active"
+        )
+    except Exception as e:
+        logger.error(f"Failed to check bot status: {e}")
+        await update.message.reply_text("❌ Failed to check bot status. Check logs.")
 
 
 async def my_role_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -834,6 +894,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not should_respond:
         return
 
+    # Check if bot is enabled; if not, don't respond (but learning continues elsewhere)
+    if not memory.is_bot_enabled():
+        logger.info("Bot is disabled; skipping response to user %s", username)
+        return
+
     # Clean the bot's tag from the message for the query
     query = text.replace(f"@{bot_username}", "").strip() if bot_username else text
 
@@ -901,6 +966,11 @@ async def handle_image(update: Update, context: ContextTypes.DEFAULT_TYPE):
         should_respond = True
 
     if not should_respond:
+        return
+
+    # Check if bot is enabled; if not, don't respond (but learning continues elsewhere)
+    if not memory.is_bot_enabled():
+        logger.info("Bot is disabled; skipping response to user %s", username)
         return
 
     query_parts = []

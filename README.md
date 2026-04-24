@@ -97,6 +97,10 @@ The bot supports secure, admin-only knowledge operations in private chat.
 - `/image_drafts [limit] [offset]` - Lists pending image-learning drafts
 - `/image_approve <draft_id>` - Approves image draft and writes to KB
 - `/image_reject <draft_id>` - Rejects image draft
+- **Bot Control Commands:**
+  - `/bot_on` - Enable the bot to answer questions
+  - `/bot_off` - Disable bot answers (learning continues)
+  - `/bot_status` - Show current bot status
 
 Security behavior:
 - Only Telegram users listed in `SUPER_ADMIN_USER_IDS` can run these commands.

@@ -161,6 +161,51 @@ async def admin_add_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 - Restart the bot service after updating `.env`
 - Confirm the changes were saved to `.env`
 
+## Bot Control Commands (Super Admin Only)
+
+Super admins can now control whether the bot answers questions using these commands in private chat:
+
+### /bot_on
+**Enables the bot to answer questions**
+```
+/bot_on
+```
+✅ Response: "Bot is now **ENABLED**"
+- Bot will answer questions in groups and private chats
+- Learning continues regardless of this setting
+
+### /bot_off
+**Disables the bot from answering (but keeps learning active)**
+```
+/bot_off
+```
+⛔ Response: "Bot is now **DISABLED**"
+- Bot will **NOT** answer any questions
+- Training data and learning from admin responses **continues** - the bot still learns from trainer interactions
+- Useful for maintenance, testing, or temporarily silencing the bot
+
+### /bot_status
+**Check the current bot status**
+```
+/bot_status
+```
+Response shows:
+- Current status (ENABLED / DISABLED)
+- Whether bot is answering questions
+- Whether learning is active (always yes)
+
+### Key Features
+- **State persists across restarts** - Your on/off setting is saved in MongoDB
+- **Learning independent** - When bot is OFF, trainer responses still create learning drafts for super-admin review
+- **Super-admin only** - Only admins in `SUPER_ADMIN_USER_IDS` can use these commands
+- **Private chat only** - For security, these commands only work in private chat with the bot
+
+### Use Cases
+1. **Maintenance windows** - Turn off answers while you test new knowledge entries
+2. **Staged deployment** - Start with bot disabled, test, then enable
+3. **Load management** - Temporarily disable if you're experiencing high API costs
+4. **Emergency response** - Quickly silence the bot if it needs adjustment
+
 ## Admin Learning Flow
 
 ```

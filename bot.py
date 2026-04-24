@@ -13,6 +13,9 @@ from bot.handlers import (
     start_command,
     my_role_command,
     admin_help_command,
+    bot_on_command,
+    bot_off_command,
+    bot_status_command,
     kb_count_command,
     kb_list_command,
     kb_get_command,
@@ -58,6 +61,9 @@ def main():
     application.add_handler(CommandHandler("start", start_command))
     application.add_handler(CommandHandler("my_role", my_role_command))
     application.add_handler(CommandHandler("admin_help", admin_help_command))
+    application.add_handler(CommandHandler("bot_on", bot_on_command))
+    application.add_handler(CommandHandler("bot_off", bot_off_command))
+    application.add_handler(CommandHandler("bot_status", bot_status_command))
     application.add_handler(CommandHandler("kb_count", kb_count_command))
     application.add_handler(CommandHandler("kb_list", kb_list_command))
     application.add_handler(CommandHandler("kb_get", kb_get_command))
