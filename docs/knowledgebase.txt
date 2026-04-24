@@ -1,0 +1,111 @@
+Question: "Дастлабки баланс қолдиқлари қаердан киритилади?"
+Answer: "Дастлабки, яъни йил бошидаги баланс қолдиқлари ўтган йилнинг сўнгги куни (31.12.20..) билан киритилиши керак. Асосий воситалар — «Асосий воситалар» менюсида, ТМЗ — ўз менюсида, товар ва тайёр маҳсулотлар эса ўз менюсининг «Қолдиқ» ички менюсидан киритилади. Банк ҳисобварағи қолдиғи — «Ҳисобварақлар» менюсидан, таъсисчи маълумотлари — «Таъсисчилар» менюсидан, солиқ қолдиқлари — «Солиқ ҳисоби» менюсидан, дебитор ва кредиторлар эса ўзларининг тегишли менюларидан киритилади. Бошқа қолдиқлар тузатиш ўтказмалари (проводкалар) орқали киритилади."
+
+--------------------------------------------------------------------------------
+
+Question: "Тизимни демо версияси борми?"
+Answer: "Тизимнинг демо версияси йўқ, лекин рўйхатдан ўтган фойдаланувчи учун 1 ойлик бепул фойдаланиш имконияти яратилади. Шу бир ой мобайнида барча амалларни бажариб кўриш мумкин бўлади ва киритилган маълумотлар келгусида ҳам сақланиб қолади. Шунинг учун бепул даврда фирманинг тўғри маълумотларини киритиб, тест қилиб кўриш тавсия этилади. Бу кейинчалик маълумотларни ўчириш зарурати бўлмаслиги учун муҳимдир."
+
+--------------------------------------------------------------------------------
+
+Question: "Ижара шартномаларини ҳисоботда акс эттириш"
+Answer: "Жисмоний шахслар билан тузилган ижара шартномалари бўйича маълумотлар ижара объекти рўйхатдан ўтган туман солиқ инспекциясига «Даромад солиғи ҳисоботи»да кўрсатилиши керак. Яъни, агар корхона рўйхатдан ўтган ҳудудидан бошқа ҳудудда бинони ижарага олган бўлса, ўша ҳудуд солиқ инспекциясига солиқ сайти орқали ижара маълумотлари тўғрисида ҳисобот топшириши шарт. Мисол учун: Корхона Юнусобод туманида рўйхатдан ўтган, лекин Чилонзор туманидан ижарага объект олган. Бунда корхона Юнусобод туманига иш ҳақи тўғрисидаги, Чилонзор туманига эса ижара тўғрисидаги ҳисоботларни топширади."
+
+--------------------------------------------------------------------------------
+
+Question: "Kasallik varaqasidan 0,1% miqdorida ShJBPH (INPS) ushlanmaydi"
+Answer: "O‘zbekiston Respublikasining “2026-yil uchun Davlat budjeti to‘g‘risida”gi Qonunining 12-moddasi hamda Soliq kodeksining 376-moddasiga ko‘ra, mehnatga haq to‘lash bilan bog‘liq bo‘lmagan daromadlardan olinadigan jismoniy shaxslardan olinadigan daromad solig‘i (JSHODS) tarkibidan 0,1% miqdoridagi majburiy ShJBPH (INPS) ajratmalari ushlanmaydi."
+
+--------------------------------------------------------------------------------
+
+Question: "Ma'lumotlarni arxivlash"
+Answer: "O‘tgan davr hisobotlari va ma’lumotlarining daxlsizligini saqlash uchun arxivlash tizimi qo‘shildi. Sozlamalar bo‘limida arxivlash sanasini belgilash orqali ushbu sanagacha bo‘lgan barcha amallarni tahrirlashdan himoyalash (bloklash) mumkin. Ma’lumotlarni tahrirlash zarurati tug‘ilsa, arxivlash sanasini tahrir qilinadigan davrdan oldingi sanaga surish orqali kirishni qayta tiklash mumkin."
+
+--------------------------------------------------------------------------------
+
+Question: "Tayyor mahsulotni retsept (spetsifikatsiya) asosida ishlab chiqarish"
+Answer: "Ishlab chiqaruvchilar uchun ajoyib yangilik! Endi tayyor mahsulot tarkibidagi xomashyo miqdori aniq bo‘lsa, tizim ularni avtomatik hisobdan chiqaradi. Buning uchun quyidagi qadamlarni bajaring: 1. Chiqim formasini ochish: Aktivlar menyusidan TMZ (Tovar-moddiy zaxiralari) bo‘limiga kiring. Ishlab chiqarish menyusidan Chiqim bandini tanlang va "Qo‘shish" tugmasini bosing. Ochilgan oynada "Donalab ishlab chiqarish" formasini tanlang. 2. Retseptni shakllantirish: "Retsept asosida chiqim qilish" tugmasini faollashtiring. "Tayyor mahsulot nomi" qatoriga yangi tovar qo‘shing yoki mavjudini tanlang. Tovar qo‘shish jarayonida "Retsept shakllantirish" belgisini tanlasangiz, pastda xomashyolar ro‘yxati ochiladi. Shu yerda kerakli tarkibni kiriting va saqlang. 3. Ishlab chiqarishni yakunlash: Saqlash tugmasi bosilganda, tayyor mahsulot nomi avtomatik ravishda ishlab chiqarish formasiga birikadi. Tayyor mahsulot miqdorini kiritganingizda, tizim retsept bo‘yicha kerakli xomashyolarni ombor qoldig‘idan avtomatik ravishda ajratib beradi. Ma’lumotlar to‘g‘riligini tekshirib, "Saqlash" tugmasini bosing. Natija: Tayyor mahsulot omborga kirim qilinadi, uning tarkibidagi xomashyolar esa avtomatik ravishda chiqim qilinadi."
+
+--------------------------------------------------------------------------------
+
+Question: "Ma’lumotlarni tahrirlashdan himoyalash: Arxivlash funksiyasi"
+Answer: "Buxgalterlar uchun qulay imkoniyat! Endi kiritilgan ma’lumotlarning o‘zgarib ketmasligini ta’minlash uchun "Arxivlash" funksiyasi ishga tushirildi. Funksiyadan foydalanish tartibi: Arxivni faollashtirish: Sozlamalar menyusidan "Arxivlash" bo‘limini tanlang. Bloklanishi kerak bo‘lgan yil va oyni belgilab, "Saqlash" tugmasini bosing. Shundan so‘ng, belgilangan davrgacha bo‘lgan barcha ma’lumotlarga o‘zgartirish kiritish imkoniyati yopiladi. Arxivni ochish (Tahrirlashga ruxsat berish): Ma’lumotlarni qayta tahrirlash zarur bo‘lsa, arxivlash menyusiga kiring. Yil va oyni tahrir qilinadigan davrdan oldingi muddatga o‘zgartirib, saqlash tugmasini bosing. Natija: Arxivlash orqali eski davr hisobotlarining daxlsizligini ta’minlaysiz va kutilmagan xatoliklarning oldini olasiz."
+
+--------------------------------------------------------------------------------
+
+Question: "Kiruvchi hisob-fakturalarga guruhlangan holda o‘tkazma (provodka) berish"
+Answer: "Endilikda har bir hisob-fakturani alohida ochib, provodka berishga hojat qolmadi. Tizimning "Tahlil" funksiyasi orqali ularni guruhlab, bir vaqtning o‘zida balansga olishingiz mumkin. Funksiyadan foydalanish tartibi: Guruhlash: "Kiruvchi hisob-fakturalar" menyusida "Tahlil" tugmasini bosing. Tizim barcha fakturalarni Kontragentlar va Mahsulot/Xizmatlar bo‘yicha avtomatik guruhlaydi. Ma’lumotlarni kiritish: Jadvaldagi summa ustiga bosib, kerakli shartnomalar va omborlarni bir marta tanlang. Provodka berish: Guruhlangan mahsulotlar uchun provodka sozlamalarini kiriting va "Saqlash" tugmasini bosing. Ushbu guruhga tegishli barcha fakturalar avtomatik ravishda balansga (provodkalari bilan) o‘tkaziladi. Asosiy afzalliklari: Vaqtni tejash: Masalan, bitta yetkazib beruvchidan kelgan 50 ta fakturani bor-yo‘g‘i 1 ta amal bilan balansga olish mumkin. Avtomatlashtirish: Har bir faktura uchun alohida shartnoma tanlab chiqish shart emas. Moslashuvchanlik: Agar kontragent hisobot davri ichida QQS to‘lovchiga o‘tgan bo‘lsa, u QQS to‘lovchi bo‘lgunga qadar yuborgan fakturalarga QQS belgisini (galochka) qo‘ymaslik imkoniyati mavjud. Natija: Hujjatlar bilan ishlash tezligi ortadi va mexanik xatolarning oldi olinadi."
+
+--------------------------------------------------------------------------------
+
+Question: "Kontragent hisobot davri o‘rtasida QQS to‘lovchiga o‘tgan bo‘lsa, tahlil jarayonida nimalarga e’tibor berish lozim?"
+Answer: "QQS belgisini (galochka) boshqarish: Kontragent QQS to‘lovchi bo‘lgunga qadar yuborgan fakturalarga QQS belgisini qo‘ymaslik kerak. Davrlarga ajratish: Tahlil jarayonida kontragentning QQS to‘lovchi bo‘lgunga qadar va undan keyin yuborgan fakturalarini farqlash lozim. Bu orqali hisob-fakturalarni guruhlab balansga olishda QQS hisobini to‘g‘ri yuritish ta’minlanadi."
+
+--------------------------------------------------------------------------------
+
+Question: "Yangi tayyor mahsulot qo‘shilayotgan vaqtda uning tarkibiy qismlarini (xomashyolarni) qayerda shakllantirish kerak?"
+Answer: "Yangi tayyor mahsulot qo‘shilayotgan vaqtda uning tarkibiy qismlarini (xomashyolarni) quyidagi tartibda shakllantirish kerak: Retsept shakllantirish belgisi: Yangi tovar qo‘shish jarayonida "Retsept shakllantirish" belgisi tanlanadi. Xomashyolar ro‘yxati: Ushbu belgi tanlangandan so‘ng, pastda ochilgan xomashyolar ro‘yxati orqali mahsulotning tarkibiy qismlari kiritiladi va shakllantiriladi. Shundan so‘ng, "Saqlash" tugmasini bossangiz, ushbu retsept avtomatik ravishda tayyor mahsulotga birikadi."
+
+--------------------------------------------------------------------------------
+
+Question: "Assalomu alaykum, Keeping platformasiga ulanmoqchi edim, qanday ulansam bo'ladi?"
+Answer: "Assalomu alaykum! Keeping platformasiga ulanish uchun hech qayerga borishingiz shart emas. Siz brauzer orqali keeping.uz saytiga kirib, yuqoridagi “Tizimga kirish” tugmasini bosasiz. Shundan so‘ng, E-IMZO kalitingiz orqali avtorizatsiya jarayonini amalga oshirasiz. Bu orqali tizimga kirishingiz va foydalanishni boshlashingiz mumkin. Agar qo'shimcha savollar bo'lsa, bemalol @keepingchat gruppasiga yozishingiz yoki mutaxassislarimizga +998883018484 raqamiga qo'ng'iroq qilishingiz mumkin."
+
+--------------------------------------------------------------------------------
+
+Question: Ассалому алайкум! Омбор ва бўлимда бўлимлар яратилган. Шунда транспорт бўлимига иш ҳақи харажат счётига 9430 қўйилган, шуни 9410.3 га ўзгартириш керак. Нима қилиш керак?
+Answer: Ассалому алайкум! Аввал 9410.3 счёт очинг. Кейин бўлимдан шу счётни бириктирасиз. Счётни ўзгартириш имкони бўлмаса, янги бўлим яратасиз.
+--------------------------------------------------------------------------------
+
+Question: "Қачон активни ТМЗ деб тан олиш керак?"
+Answer: "Бирор активни ТМЗ деб тан олиш ва тегишли счетга кирим қилиш учун 3 саволга “ҳа” деб жавоб берилиши керак: У бизга келажакда иқтисодий фойда олиб келадими? (масалан, сотамиз, ишлаб чиқаришда ишлатамиз ва ҳоказо) Унинг қийматини аниқлаб бўладими? (ё сотиб олиш нархи, ё ишлаб чиқариш нархи ёки кирим хужжатида ёзилган нархи бўлиши керак) Мулк ҳуқуқи корхонага ўтганми? (счет-фактурада ёки қабул-қабул қилиш ҳужжатларида расмийлаштирилганлиги) Масалан хитойдан материал олиб келишга шартнома тузилган 30 000 долларга. Шартнома шартлари EXW (Франко завод) яъни хитойдаги заводдан чиқиши билан станокга эгалик хуқуқи ўтган ҳисобланади. Гарчи хали ИМ40 ГТД чиқмаган бўлсада, корхона инвойс орқали ушбу материални 1510 счетига кирим қилиши лозим. Ўша материални омборни келтирилгунича қилинган харажатларни ҳам 1510 счетда йиғиб борилади. Алал оқибат охирида ТМЗ омборга тушганида 1510 счетидан 1010 счетига олиб ўтиб, ҳисобга хом-ашё сифатида кирим қилинади. Асосий қоида хар доим шартнома шартларига қараш лозим!"
+
+--------------------------------------------------------------------------------
+
+Question: "Янги БҲМС-5га кўра асосий воситани тан олиш шартлари қандай ўзгарди?"
+Answer: "Эски қоидадаги БҲМнинг 50 баравари деган талаб янги стандартда мавжуд эмас. Энди актив асосий восита деб тан олинади, агар: Ундан келажакда иқтисодий наф олиш кутилса; Унинг қийматини аниқ ўлчаш мумкин бўлса; Ундан 1 йилдан ортиқ фойдаланиш режалаштирилса."
+
+--------------------------------------------------------------------------------
+
+Question: "Эски БҲМС-5 да аввал қандай эди?"
+Answer: "Эски қоида бўйича қуйидаги талабларга жавоб берган активлар асосий восита деб олинган эди, агар: Ундан келажакда иқтисодий наф олиш кутилса; Унинг қийматини аниқ ўлчаш мумкин бўлса; бир йилдан ортиқ хизмат муддатига эга бўлса бир бирлик (тўплам) учун қиймати 50 БҲМдан ортиқ бўлган буюмлар"
+
+--------------------------------------------------------------------------------
+
+Question: "Ходимларга берилган корпоратив совғалар бухгалтерия ва солиқ ҳисобида қандай акс эттирилади?"
+Answer: "Ходимларга берилган совғалар аввало ички ҳужжатлар орқали расмийлаштирилади: раҳбар буйруғи, раздатка ведомости ва қабул-қабул қилиш ҳужжатлари. Совғалар таъминловчи ҳисоб-фактураси ёки ККТ чеки асосида омборга кирим қилинади, сўнгра ходимларга топширилгандан кейин балансдан чиқарилади. Солиқ нуқтаи назаридан, ходим олган совға моддий наф шаклидаги даромад ҳисобланади (376-модда). Бир солиқ йили давомида 2,11 МҲЭКМгача бўлган қиймат ЖШДСдан озод қилинади (378-модда), ошган қисмига эса ЖШДС ҳисобланади. Ижтимоий солиқ эса бундай даромадга татбиқ этилмайди (403–404-моддалар). ҚҚС масаласида эса “киритилган” ҚҚСни ҳисобга олиш ёки олмасликка қараб, совға бериш реализация сифатида ёки реализация эмас деб қаралади (239-модда)."
+
+--------------------------------------------------------------------------------
+
+Question: "Айланмадан ҚҚСга янги ўтган корхона 12 ой ичида харид қилинган ТМЗлардан ҚҚСни қачон ҳисобга олиш мумкин?"
+Answer: "12 ой ичида харид қилинган ТМЗ бўйича ҚҚС фақат битта шарт билан зачет қилинади: ушбу ТМЗ ҚҚСга ўтиш пайтида корхона қолдиғида мавжуд бўлиши ва кейинчалик ҚҚСли оборотда ишлатилиши керак. Бу талаб 269-модданинг 2–4-қисмларида баён этилган."
+
+--------------------------------------------------------------------------------
+
+Question: "Инвентарь ва хўжалик жиҳозлари нима?"
+Answer: "Инвентарь ва хўжалик жиҳозлари (1080 счет) — бу корхонанинг кундалик фаолиятида ишлатиладиган ва иш жараёнида ёрдамчи вазифани бажарадиган, қиймати нисбатан паст бўлиб, одатда қисқа муддатда хизмат қиладиган активлардир. Инвентарь ва хўжалик жиҳозлари деб эътироф этишнинг 2 шарти: хизмат муддати бир йилдан ошмайдиган; хизмат муддатидан қатъи назар харид қилиш пайтида қиймати бир бирлик (комплект) учун БҲМнинг 50 бараваригача миқдорда бўлган активлар."
+
+--------------------------------------------------------------------------------
+
+Question: "Солиқ агенти ва тўлов манбаида солиқ солиш нима дегани?"
+Answer: "Солиқ агенти деб, зиммасига солиқни ҳисоблаш, ушлаб қолиш ва давлат бюджетига ўтказиб бериш мажбурияти юклатилган шахсларга айтилади. Солиқ агенти ўз ёнидан солиқ тўламайди, балки бошқа шахс учун солиқ ҳисоблаб, ушлаб қолиб ва бюджетга тўлаб беради. Масалан: корхона ўз ишчи ходимига ойлик тўлаганда, солиқ агентига айланади ва ишчи ходимга ойлик беришдан аввал, ундан даромад солиғини ушлаб қолади, ҳисобот топширади ва тўлаб беради."
+
+--------------------------------------------------------------------------------
+
+Question: "Норезидентга тўлов қилганда ундан фойда солиғи ушлаб қолиш керакми?"
+Answer: "Ҳа, умумий қоидага кўра, агар норезидент Ўзбекистон ҳудудида доимий муассаса ташкил этмасдан даромад олаётган бўлса, сиз солиқ агенти сифатида тўлов манбаида солиқ ушлаб қолишингиз шарт."
+
+--------------------------------------------------------------------------------
+
+Question: "Жорий қиймат ва ҳаққоний қиймат фарқи нимада?"
+Answer: "Ҳаққоний қиймат активнинг ўз қиймати эмас, балки бозор иштирокчилари уни сотиб олиш ёки мажбуриятни бажариш учун қанча тўлайди деган қийматдир— яъни активни бозорда хозир сотилса қанча пул олиш мумкинлигини кўрсатади. Фокус: даромад/олинадиган пул нуқтаи назаридан. Жорий қиймат активни қайта сотиб олиш ёки мажбуриятни бажариш учун сарф қилинадиган пул. Яъни активни бозордан ҳозир сотиб олинса қанча пул тўлаш кераклигини кўрсатади. Фокус: сарф/харажат нуқтаи назаридан."
+
+--------------------------------------------------------------------------------
+
+Question: "Реализация қилишнинг соф қиймати нима?"
+Answer: "Реализация қилишнинг соф қиймати (чистая стоимость реализации) — ТМЗни мақсадига кўра ишлатиладиган ҳолатга келтириш ва реализация қилиш бўйича баҳоланган харажатлар чегирилган ҳолдаги жорий қиймати Тушуниш учун изоҳ ва мисол: Бу сотувдан кейин корхонада қоладиган «тоза пул». Формула: Сотиш нархи - Таъмирлаш харажати - Сотиш харажати. Мисол учун: корхонада 2910 счетда эски кофе машинаси бор. Уни 3 млн сўмга сотиши мумкин. Лекин аввал уни 180минг сўмга таъмирлаш, сотишга тайёрлаш учун 20 минг сўмга каробка олиш керак. Демак мазкур кофе машинасини сотишдан соф қоладиган пул бу 3 млн - 180минг - 20минг сўм = 2,8 млн сўмни ташкил қилади. Кофе машинасини реализация қилишнинг соф қиймати шу 2,8 млн сўмга тенг."
+
+--------------------------------------------------------------------------------
+
+Question: "Фактурани "Юбориш" қисмидан шакллантириб, имзоладим, нима учун яна счет бериш талаб қилиняпти?"
+Answer: "Фактурани омбор орқали чиқим қилиш формасидан қилсангиз счёт берилган қаторга ўтади."
