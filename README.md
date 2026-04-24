@@ -24,7 +24,7 @@ This bot is designed to serve as a hyper-confident, autonomous agent for Telegra
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/agentic-telegram-bot.git
+git clone https://github.com/khurshidnm/telegram-bot-agentic-rag.git
 cd agentic-telegram-bot
 ```
 
@@ -47,6 +47,7 @@ OPENAI_API_KEY=your_openai_api_key
 MONGO_URI=mongodb://localhost:27017/
 DB_NAME=telegram_bot
 COLLECTION_NAME=chat_history
+IMAGE_DRAFT_COLLECTION_NAME=image_learning_drafts
 
 # Comma-separated list of Telegram User IDs for Human Assistants
 # Super admin can manage KB content via bot commands
@@ -93,6 +94,9 @@ The bot supports secure, admin-only knowledge operations in private chat.
 - `/kb_edit <id> | <question> | <answer>` - Updates an existing entry
 - `/kb_delete <id>` - Deletes an entry by ID
 - `/kb_export` - Exports all knowledge entries as a text file
+- `/image_drafts [limit] [offset]` - Lists pending image-learning drafts
+- `/image_approve <draft_id>` - Approves image draft and writes to KB
+- `/image_reject <draft_id>` - Rejects image draft
 
 Security behavior:
 - Only Telegram users listed in `SUPER_ADMIN_USER_IDS` can run these commands.

@@ -1,33 +1,36 @@
 # Admin Management Guide
 
-This document explains how to manage your 10 admins who support clients in the Telegram group.
+This document explains role-based admin management for support operations in Telegram groups.
 
 ## How Admins Work
 
-The bot treats admin users differently from regular clients:
+The bot uses two admin roles:
 
-✅ **What admins can do:**
-- Help clients directly in the group
-- Send messages in the group
-- Answer client questions
+✅ **Super Admin can:**
+- Run private governance commands (`/kb_*`, `/image_*`, `/admin_help`)
+- Approve or reject image-learning drafts
 
-❌ **What admins don't get:**
-- Bot replies (the bot will NOT respond to their messages)
-- Bot confusion (admins won't trigger unnecessary bot responses)
+✅ **Trainer Admin can:**
+- Help clients directly in groups
+- Train the bot from reply-based interactions
+
+❌ **Trainer admins don't get:**
+- Bot replies in group workflows (to avoid bot/staff collisions)
 
 📚 **What the bot learns:**
-- When an admin replies to a client question, the bot **learns from that interaction**
+- When a trainer admin replies to a client question, the bot **learns from that interaction**
 - This builds the bot's knowledge base over time
 - Admin responses train the RAG pipeline to answer similar questions better
 
 ## Configuration
 
-### Setting Admin User IDs
+### Setting Role User IDs
 
-Add your 10 admins to the `.env` file in your project root:
+Add role IDs to the `.env` file in your project root:
 
 ```env
-ADMIN_USER_IDS=123456789,987654321,111222333,444555666,777888999,101112131,415161718,192021222,232425262,272829303
+SUPER_ADMIN_USER_IDS=123456789
+TRAINER_ADMIN_USER_IDS=987654321,111222333,444555666
 ```
 
 **To find an admin's User ID:**
@@ -37,6 +40,10 @@ ADMIN_USER_IDS=123456789,987654321,111222333,444555666,777888999,101112131,41516
 3. Or use `@userinfobot` in Telegram to get their ID
 
 **Important:** Separate user IDs with **commas** and **no spaces** before/after commas.
+
+Backward compatibility:
+- If `TRAINER_ADMIN_USER_IDS` is missing, the bot falls back to `ADMIN_USER_IDS` for trainer access.
+- Prefer using explicit role variables in all new setups.
 
 ### Environment Variable Location
 
@@ -52,7 +59,8 @@ MONGO_URI=mongodb://localhost:27017/
 DB_NAME=telegram_bot
 COLLECTION_NAME=chat_history
 STRICTNESS_LEVEL=BALANCED
-ADMIN_USER_IDS=123456789,987654321,111222333
+SUPER_ADMIN_USER_IDS=123456789
+TRAINER_ADMIN_USER_IDS=987654321,111222333
 ```
 
 ## How the Bot Handles Messages
@@ -63,26 +71,32 @@ Client: "How do I create an invoice?"
 Bot: "To create an invoice, follow these steps..."
 ```
 
-### From Admins Responding to Clients
+### From Trainer Admins Responding to Clients
 ```
 Client: "How do I create an invoice?"
 Admin: "Here are the steps to create an invoice..."
 [Bot learns this Q&A pair silently - no reply from bot]
 ```
 
-### From Admins Asking Directly
+### From Trainer Admins Asking Directly in Group
 ```
-Admin: "How do I create an invoice?"
+Trainer Admin: "How do I create an invoice?"
 [Bot stays silent - no response to admins]
+```
+
+### From Super Admins in Private Chat
+```
+Super Admin: /kb_add Question | Answer
+Bot: "✅ Added knowledge entry..."
 ```
 
 ## Monitoring Admin Interactions
 
-The bot logs all messages including admin interactions:
+The bot logs all messages including role-based interactions:
 
 ```
-INFO - Admin john_doe sent message, skipping bot response
-INFO - Admin john_doe replied to client. Learning Q&A pair...
+INFO - Trainer admin john_doe sent group message, skipping bot response
+INFO - Trainer admin john_doe replied to client. Learning Q&A pair...
 ```
 
 Check logs with:
@@ -96,7 +110,7 @@ journalctl -u telegram-bot.service | tail -100  # Last 100 lines
 
 ### Method 1: Update `.env` (Recommended)
 1. Edit your `.env` file
-2. Update the `ADMIN_USER_IDS` variable with the new list
+2. Update `SUPER_ADMIN_USER_IDS` and/or `TRAINER_ADMIN_USER_IDS`
 3. Restart the bot:
    ```bash
    sudo systemctl restart telegram-bot.service
@@ -132,8 +146,8 @@ async def admin_add_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 ## Troubleshooting
 
-### Admin is still getting bot responses
-- Verify the user ID in `ADMIN_USER_IDS` is correct
+### Trainer admin is still getting bot responses
+- Verify the user ID in `TRAINER_ADMIN_USER_IDS` is correct
 - Check there are no spaces around commas
 - Restart the bot: `sudo systemctl restart telegram-bot.service`
 - Check logs: `journalctl -u telegram-bot.service -f`
@@ -143,7 +157,7 @@ async def admin_add_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 - Check the bot logs for "Learning Q&A pair" messages
 - Verify the admin's response and client's question both have text
 
-### New admin doesn't have effect
+### New role assignment doesn't have effect
 - Restart the bot service after updating `.env`
 - Confirm the changes were saved to `.env`
 
@@ -152,7 +166,7 @@ async def admin_add_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 ```
 Client: "Question?"
      ↓
-Admin: (replies to client's message)
+Trainer Admin: (replies to client's message)
      ↓
 Bot logs the question and answer
      ↓

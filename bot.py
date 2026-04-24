@@ -8,6 +8,8 @@ load_dotenv()
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters
 from bot.handlers import (
     handle_message,
+    handle_voice,
+    handle_image,
     start_command,
     my_role_command,
     admin_help_command,
@@ -18,6 +20,12 @@ from bot.handlers import (
     kb_edit_command,
     kb_delete_command,
     kb_export_command,
+    image_drafts_command,
+    image_approve_command,
+    image_reject_command,
+    learning_drafts_command,
+    learning_approve_command,
+    learning_reject_command,
 )
 
 # Setup logging
@@ -29,6 +37,11 @@ logging.basicConfig(
 logging.getLogger("httpx").setLevel(logging.WARNING)
 
 logger = logging.getLogger(__name__)
+
+
+async def error_handler(update, context):
+    """Logs unhandled Telegram update errors without crashing the polling loop."""
+    logger.exception("Unhandled exception while processing update", exc_info=context.error)
 
 def main():
     token = os.getenv("TELEGRAM_BOT_TOKEN")
@@ -52,11 +65,21 @@ def main():
     application.add_handler(CommandHandler("kb_edit", kb_edit_command))
     application.add_handler(CommandHandler("kb_delete", kb_delete_command))
     application.add_handler(CommandHandler("kb_export", kb_export_command))
+    application.add_handler(CommandHandler("image_drafts", image_drafts_command))
+    application.add_handler(CommandHandler("image_approve", image_approve_command))
+    application.add_handler(CommandHandler("image_reject", image_reject_command))
+    application.add_handler(CommandHandler("learning_drafts", learning_drafts_command))
+    application.add_handler(CommandHandler("learning_approve", learning_approve_command))
+    application.add_handler(CommandHandler("learning_reject", learning_reject_command))
+    application.add_handler(MessageHandler(filters.PHOTO, handle_image))
+    application.add_handler(MessageHandler(filters.Document.IMAGE, handle_image))
+    application.add_handler(MessageHandler(filters.VOICE, handle_voice))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+    application.add_error_handler(error_handler)
 
     # Start the Bot
     logger.info("Bot is polling...")
-    application.run_polling()
+    application.run_polling(drop_pending_updates=True)
 
 if __name__ == "__main__":
     main()

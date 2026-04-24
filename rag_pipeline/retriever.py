@@ -62,7 +62,7 @@ class RAGPipeline:
             logger.error(f"Error during retrieval: {e}")
             return []
 
-    def answer_question(self, question: str, history: str) -> str:
+    def answer_question(self, question: str, history: str, script_hint: str = "Auto") -> str:
         """Answers a question using the retrieved context and chat history."""
         if not self.vector_store:
             return "I'm sorry, my knowledge base is currently unavailable."
@@ -83,7 +83,8 @@ class RAGPipeline:
             response = chain.invoke({
                 "context": context,
                 "history": history,
-                "question": question
+                "question": question,
+                "script_hint": script_hint,
             })
             
             if "UNKNOWN_ANSWER" in response:

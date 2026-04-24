@@ -55,11 +55,17 @@ OPENAI_API_KEY=your_openai_api_key
 MONGO_URI=mongodb://localhost:27017/
 DB_NAME=telegram_bot
 COLLECTION_NAME=chat_history
+IMAGE_DRAFT_COLLECTION_NAME=image_learning_drafts
 STRICTNESS_LEVEL=BALANCED
-ADMIN_USER_IDS=admin1_id,admin2_id,admin3_id
+SUPER_ADMIN_USER_IDS=123456789
+TRAINER_ADMIN_USER_IDS=987654321,112233445
 ```
 
-**Admin User IDs:** Add your support staff's Telegram User IDs (comma-separated) so the bot won't reply to them directly, but will still learn from their interactions with clients. See [ADMIN_MANAGEMENT.md](ADMIN_MANAGEMENT.md) for details.
+**Role IDs:**
+- `SUPER_ADMIN_USER_IDS`: users with private admin command access (`/kb_*`, `/image_*`, `/admin_help`).
+- `TRAINER_ADMIN_USER_IDS`: support staff IDs for group training interactions.
+
+See [ADMIN_MANAGEMENT.md](ADMIN_MANAGEMENT.md) for details.
 
 Press `CTRL + O`, `Enter` to save, and `CTRL + X` to exit.
 
